@@ -6,13 +6,29 @@ const {
   deleteMedications,
   createMedication,
   updateMedication,
+  getMedicationById,
 } = require("../controllers/medicationsControllers");
+const firebase = require("../server/middlewares/firebase/firebase");
 
 const upload = multer({ dest: "images/" });
 const medicationsRouter = express.Router();
 
-medicationsRouter.get("/list", getMedications);
+medicationsRouter.get("/", getMedications);
+medicationsRouter.get("/:id", getMedicationById);
+
 medicationsRouter.delete("/:id", deleteMedications);
-medicationsRouter.post("/create", upload.single("image"), createMedication);
-medicationsRouter.put("/update/:id", upload.single("image"), updateMedication);
+
+medicationsRouter.post(
+  "/create",
+  upload.single("image"),
+  firebase,
+  createMedication
+);
+medicationsRouter.put(
+  "/update/:id",
+  upload.single("image"),
+  firebase,
+  updateMedication
+);
+
 module.exports = medicationsRouter;

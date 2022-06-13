@@ -39,7 +39,7 @@ describe("Given a GET/medication/list endpoint", () => {
 
       Medication.find = jest.fn().mockResolvedValueOnce(mockmeds);
       const { body } = await await request(app)
-        .get("/medications/list")
+        .get("/medications")
         .set({ authorization: "Bearer mocktoken" })
         .expect(200);
 

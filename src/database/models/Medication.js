@@ -3,6 +3,7 @@ const { Schema, model, SchemaTypes } = require("mongoose");
 const medicationSchema = new Schema({
   title: { type: String, required: true },
   image: String,
+  defaultImage: String,
   category: String,
   prospect: String,
   description: String,

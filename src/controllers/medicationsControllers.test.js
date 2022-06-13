@@ -108,30 +108,6 @@ describe("Given createMedication function", () => {
       expect(res.json).toHaveBeenCalledWith({ medication: mockmeds });
     });
   });
-
-  describe("When it's invoqued with a request that has a new project and a file but fails on renaming it's name", () => {
-    test("Then it should call next", async () => {
-      const res = {
-        status: jest.fn().mockReturnThis(),
-        json: jest.fn(),
-      };
-
-      jest.mock("fs", () => ({
-        ...jest.requireActual("fs"),
-        rename: jest.fn().mockRejectedValueOnce(new Error()),
-      }));
-
-      const req = {
-        body: mockmeds[0],
-        file: {},
-        userId: "mockid",
-      };
-
-      await createMedication(req, res, next);
-
-      expect(next).toHaveBeenCalled();
-    });
-  });
 });
 describe("Given updateMedication function", () => {
   describe("When it is invoked with a request to update an existing medication", () => {
