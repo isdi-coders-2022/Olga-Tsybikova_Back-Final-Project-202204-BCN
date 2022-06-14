@@ -34,8 +34,17 @@ const deleteMedications = async (req, res, next) => {
 
 const createMedication = async (req, res, next) => {
   try {
-    const newMedication = req.body;
     const { userId } = req;
+    const { defaultImage, file } = req;
+
+    const newMedication = {
+      title: req.body.title,
+      category: req.body.category,
+      image: req.body.image,
+      uses: req.body.uses,
+      treatment: req.body.treatment,
+      defaultImage: file ? defaultImage : "",
+    };
 
     const createdMedication = await Medication.create(newMedication);
     await User.findOneAndUpdate(
@@ -55,19 +64,21 @@ const createMedication = async (req, res, next) => {
 
 const updateMedication = async (req, res, next) => {
   const { id } = req.params;
+  const { defaultImage, file } = req;
+
   const newMedication = {
     title: req.body.title,
     category: req.body.category,
     image: req.body.image,
     uses: req.body.uses,
-    owner: req.body.userId,
     treatment: req.body.treatment,
+    defaultImage: file ? defaultImage : "",
   };
 
-  await Medication.updateOne({ id }, newMedication)
+  await Medication.findByIdAndUpdate(id, newMedication)
     .then(() => {
       res.status(200).json({
-        message: "Medication updated successfully!",
+        updatedMedication: newMedication,
       });
     })
     .catch((error) => {

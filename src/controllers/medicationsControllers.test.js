@@ -8,7 +8,6 @@ const {
   getMedications,
   deleteMedications,
   createMedication,
-  updateMedication,
 } = require("./medicationsControllers");
 
 let mongoServer;
@@ -106,35 +105,6 @@ describe("Given createMedication function", () => {
 
       expect(res.status).toHaveBeenCalledWith(201);
       expect(res.json).toHaveBeenCalledWith({ medication: mockmeds });
-    });
-  });
-});
-describe("Given updateMedication function", () => {
-  describe("When it is invoked with a request to update an existing medication", () => {
-    test("Then it should the responses method with status 200", async () => {
-      const next = jest.fn();
-      const res = {
-        status: jest.fn().mockReturnThis(),
-        json: jest.fn(),
-      };
-
-      const req = {
-        body: { updateMedication: mockmeds[0] },
-        file: {
-          filename: "mockimagename",
-          originalname: "mockimage.jpg",
-        },
-        userId: "mockid",
-        params: { id: "299c35a0a3e1e0a9b455358" },
-      };
-      await updateMedication(req, res, next);
-      Medication.updateOne = jest
-        .fn()
-        .mockResolvedValueOnce({ id: "299c35a0a3e1e0a9b455358" }, mockmeds);
-      const expectedResponseMessage = {
-        message: "Medication updated successfully!",
-      };
-      expect(res.json).toHaveBeenCalledWith(expectedResponseMessage);
     });
   });
 });

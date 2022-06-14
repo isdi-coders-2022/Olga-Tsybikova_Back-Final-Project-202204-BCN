@@ -58,7 +58,7 @@ const firebase = async (req, res, next) => {
               await uploadBytes(storageRef, readFile);
               const firebaseFileURL = await getDownloadURL(storageRef);
 
-              req.body.defaultImage = firebaseFileURL;
+              req.defaultImage = firebaseFileURL;
 
               next();
             }
