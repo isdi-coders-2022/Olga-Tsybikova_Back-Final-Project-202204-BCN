@@ -6,7 +6,7 @@ jest.mock("firebase/storage", () => ({
   ...jest.requireActual("firebase/storage"),
   getStorage: jest.fn(),
   ref: jest.fn().mockReturnValue("storageRef"),
-  uploadBytes: jest.fn().mockResolvedValue("Mockly uploaded bytes"),
+  uploadBytes: jest.fn().mockResolvedValue("Mock uploaded bytes"),
   getDownloadURL: jest
     .fn()
     .mockResolvedValue("pictureBackup.firebase.picture1.jpg"),
@@ -36,7 +36,7 @@ describe("Given the firebase middleware function", () => {
         .mockImplementation((oldpath, newpath, callback) => {
           callback(expectedError);
         });
-      const req = { body: {}, file: { originalname: "picture1.jpg" } };
+      const req = { body: {}, file: { originalname: "picture.jpg" } };
 
       const next = jest.fn();
       await firebase(req, null, next);
@@ -62,7 +62,7 @@ describe("Given the firebase middleware function", () => {
         callback(expectedError);
       });
       const next = jest.fn();
-      const req = { body: {}, file: { originalname: "picture1.jpg" } };
+      const req = { body: {}, file: { originalname: "picture.jpg" } };
 
       await firebase(req, null, next);
 
